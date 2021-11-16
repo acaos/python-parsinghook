@@ -80,7 +80,9 @@ class ParsingHookLoader(Loader):
         return None
 
     def _parse_module(self):
-        with open(self._filename, 'r') as f:
+        from tokenize import open as tokenize_open
+
+        with tokenize_open(self._filename) as f:
             tree = self._parser.parse_module(f, self._filename)
 
         return compile(tree, self._filename, 'exec')
